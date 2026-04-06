@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meu Caderno Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+
+    <nav class="menu-topo">
+        <button onclick="mudarTela('venda')">🛒 Venda</button>
+        <button onclick="mudarTela('estoque')">📦 Estoque</button>
+        <button onclick="mudarTela('fiados')">📝 Fiados</button>
+    </nav>
+
+    <section id="tela-venda" class="tela">
+        <h2>Nova Venda</h2>
+        <div id="reader"></div>
+        <button class="btn-acao" onclick="iniciarScanner()">📷 BIPAR PRODUTO</button>
+        
+        <div class="carrinho">
+            <h3>Itens no Carrinho:</h3>
+            <ul id="lista-carrinho"></ul>
+            <div class="total">Total: R$ <span id="valor-total">0.00</span></div>
+        </div>
+
+        <div class="acoes-venda">
+            <button class="btn-pago" onclick="finalizarVenda('pago')">PAGOU AGORA</button>
+            <button class="btn-fiado" onclick="abrirModalFiado()">PENDURAR (FIADO)</button>
+        </div>
+    </section>
+
+    <section id="tela-estoque" class="tela" style="display:none;">
+        <h2>Cadastrar Produto</h2>
+        <input type="text" id="nome-prod" placeholder="Nome do Produto">
+        <input type="number" id="preco-prod" placeholder="Preço (Ex: 10.50)">
+        <input type="text" id="codigo-prod" placeholder="Código de Barras">
+        <button class="btn-acao" onclick="salvarProduto()">SALVAR NO ESTOQUE</button>
+        
+        <div class="lista-estoque">
+            <h3>Produtos Salvos:</h3>
+            <ul id="lista-produtos-estoque"></ul>
+        </div>
+    </section>
+
+    <section id="tela-fiados" class="tela" style="display:none;">
+        <h2>Caderno de Fiados</h2>
+        <input type="text" id="nome-cliente" placeholder="Nome do Cliente">
+        <button class="btn-acao" onclick="cadastrarCliente()">CADASTRAR CLIENTE</button>
+        <ul id="lista-clientes-fiado"></ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
