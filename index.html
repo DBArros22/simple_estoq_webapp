@@ -3,54 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Meu Caderno Digital</title>
+    <title>Gestão Pro - PDV Móvel</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
-    <nav class="menu-topo">
-        <button onclick="mudarTela('venda')">🛒 Venda</button>
-        <button onclick="mudarTela('estoque')">📦 Estoque</button>
-        <button onclick="mudarTela('fiados')">📝 Fiados</button>
+    <main id="app-container">
+        
+        <section id="tela-venda" class="tela tela-ativa">
+            <header>
+                <h2>Frente de Caixa</h2>
+                <p>Bipe ou procure o produto</p>
+            </header>
+
+            <div id="reader"></div>
+            
+            <div class="acoes-entrada">
+                <button class="btn-acao btn-scanner" onclick="iniciarScanner()">
+                    <span>📷</span> LER CÓDIGO DE BARRAS
+                </button>
+                <button class="btn-acao btn-manual" style="background: #636e72;" onclick="vendaManual()">
+                    <span>🔍</span> PROCURAR PRODUTO (MANUAL)
+                </button>
+            </div>
+            
+            <div class="caixa-carrinho">
+                <h3>Carrinho Atual</h3>
+                <div id="lista-carrinho" class="lista-itens">
+                    </div>
+            </div>
+
+            <div class="total-card">
+                <span class="total-label">Total do Cupom</span>
+                <span class="total-valor">R$ <span id="valor-total">0.00</span></span>
+            </div>
+
+            <div class="acoes-venda">
+                <button class="btn-pago" onclick="finalizarVenda('pago')">RECEBER AGORA</button>
+                <button class="btn-fiado" onclick="abrirModalFiado()">PENDURAR (FIADO)</button>
+            </div>
+        </section>
+
+        <section id="tela-estoque" class="tela">
+            <header>
+                <h2>Meu Estoque</h2>
+                <p>Cadastre novos itens aqui</p>
+            </header>
+
+            <div class="formulario-card">
+                <input type="text" id="nome-prod" placeholder="Nome do Produto (ex: Arroz 5kg)">
+                <input type="number" id="preco-prod" step="0.01" placeholder="Preço de Venda (ex: 25.90)">
+                <input type="text" id="codigo-prod" placeholder="Código de Barras (Opcional)">
+                <button class="btn-acao" onclick="salvarProduto()">SALVAR PRODUTO</button>
+            </div>
+            
+            <div class="caixa-lista">
+                <h3>Produtos no Sistema</h3>
+                <div id="lista-produtos-estoque">
+                    </div>
+            </div>
+        </section>
+
+        <section id="tela-fiados" class="tela">
+            <header>
+                <h2>Caderno de Fiados</h2>
+                <p>Controle quem está devendo</p>
+            </header>
+
+            <div class="formulario-card">
+                <input type="text" id="nome-cliente" placeholder="Nome do Cliente">
+                <button class="btn-acao" onclick="cadastrarCliente()">CADASTRAR CLIENTE</button>
+            </div>
+            
+            <div class="caixa-lista">
+                <h3>Lista de Devedores</h3>
+                <div id="lista-clientes-fiado">
+                    </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="menu-inferior">
+        <button onclick="mudarTela('venda', this)" class="btn-menu ativo">
+            <span class="icon">🛒</span>
+            <span>Venda</span>
+        </button>
+        <button onclick="mudarTela('estoque', this)" class="btn-menu">
+            <span class="icon">📦</span>
+            <span>Estoque</span>
+        </button>
+        <button onclick="mudarTela('fiados', this)" class="btn-menu">
+            <span class="icon">📝</span>
+            <span>Fiados</span>
+        </button>
     </nav>
-
-    <section id="tela-venda" class="tela">
-        <h2>Nova Venda</h2>
-        <div id="reader"></div>
-        <button class="btn-acao" onclick="iniciarScanner()">📷 BIPAR PRODUTO</button>
-        
-        <div class="carrinho">
-            <h3>Itens no Carrinho:</h3>
-            <ul id="lista-carrinho"></ul>
-            <div class="total">Total: R$ <span id="valor-total">0.00</span></div>
-        </div>
-
-        <div class="acoes-venda">
-            <button class="btn-pago" onclick="finalizarVenda('pago')">PAGOU AGORA</button>
-            <button class="btn-fiado" onclick="abrirModalFiado()">PENDURAR (FIADO)</button>
-        </div>
-    </section>
-
-    <section id="tela-estoque" class="tela" style="display:none;">
-        <h2>Cadastrar Produto</h2>
-        <input type="text" id="nome-prod" placeholder="Nome do Produto">
-        <input type="number" id="preco-prod" placeholder="Preço (Ex: 10.50)">
-        <input type="text" id="codigo-prod" placeholder="Código de Barras">
-        <button class="btn-acao" onclick="salvarProduto()">SALVAR NO ESTOQUE</button>
-        
-        <div class="lista-estoque">
-            <h3>Produtos Salvos:</h3>
-            <ul id="lista-produtos-estoque"></ul>
-        </div>
-    </section>
-
-    <section id="tela-fiados" class="tela" style="display:none;">
-        <h2>Caderno de Fiados</h2>
-        <input type="text" id="nome-cliente" placeholder="Nome do Cliente">
-        <button class="btn-acao" onclick="cadastrarCliente()">CADASTRAR CLIENTE</button>
-        <ul id="lista-clientes-fiado"></ul>
-    </section>
 
     <script src="script.js"></script>
 </body>
